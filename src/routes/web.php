@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\BreakTimeController;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +18,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
+Route::middleware('auth')->group(function () {
+    Route::get('/', [AuthController::class, 'index']);
+    Route::post('/start-work', [AttendanceController::class, 'startWork'])->name('start.work');
+});
+Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+Route::get('/start-work', [AttendanceController::class, 'startWork']);
+Route::post('/start-work', [AttendanceController::class, 'startWork'])->name('start.work');
+Route::get('/end-work/{id}', [AttendanceController::class, 'endWork'])->name('end.work');
+Route::post('/end-work', [AttendanceController::class, 'endWork'])->name('end.work');
+Route::get('/attendance/{date?}', [AttendanceController::class, 'index'])->name('attendance.index');
+Route::get('/break/start', [BreakTimeController::class, 'startBreak']);
+Route::post('/break/start', [BreakTimeController::class, 'startBreak'])->name('break.start');
+Route::get('/break/end', [BreakTimeController::class, 'endBreak']);
+Route::post('/break/end', [BreakTimeController::class, 'endBreak'])->name('break.end');

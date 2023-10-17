@@ -1,0 +1,67 @@
+.Table {
+    width: 100%;
+    border-top: solid 1px #adabab;
+    border-bottom: solid 1px #adabab;
+    border-collapse: collapse;
+    background-color: #eeecec;
+    font-size: 16px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.Table-Head-data {
+    text-align: center;
+    background-color: #eeecec;
+    padding: 30px;
+}
+
+.Table-Head-data a {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #000;
+    background-color: #fff;
+    color: #00f;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.Table-Head-data a:hover {
+    background-color: #00f;
+    color: #fff;
+}
+
+.Table_title {
+    background-color: #eeecec;
+    text-align: center;
+    margin: 0 auto;
+    padding: 20px;
+}
+.Table-Head-Row {
+    border-top: solid 1px #adabab;
+    border-bottom: solid 1px #adabab;
+}
+
+.Table-Head-Row-Cell {
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+.Table-Body tr {
+    border-top: solid 1px #adabab;
+    border-bottom: solid 1px #adabab;
+}
+
+.Table-Body-Row {
+    border-top: solid 1px #adabab;
+    border-bottom: solid 1px #adabab;
+}
+
+.Table-Body-Row-Cell {
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}

@@ -1,0 +1,152 @@
+.attendance__alert p {
+    margin: 0;
+    padding: 3%;
+    text-align: center;
+}
+
+.attendance__alert {
+    background-color: #eeecec;
+}
+
+.attendance__alert--success {
+    padding: 0px 30px;
+    border-color: #badbcc;
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.attendance__alert--danger {
+    padding: 10px 0;
+    border-color: #f5c2c7;
+    background-color: #f8d7da;
+    color: #842029;
+    height: 20px;
+}
+
+.attendance__alert--danger ul {
+    margin: 0;
+}
+
+.attendance__panel {
+    margin: 0 auto;
+    width: 70%;
+    text-align: center;
+}
+
+.attendance__button,
+.attendance__button_break {
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.attendance__button-start,
+.attendance__button-end,
+.attendance__button-break,
+.attendance__button-resume {
+    padding: 5px;
+    width: 200px;
+    height: 100px;
+    /* ボタンの幅を調整 */
+    border: none;
+    border-radius: 3px;
+    background: white;
+    color: black;
+    cursor: pointer;
+}
+
+.attendance__button-start {
+    margin-bottom: 10px;
+    /* 下部の隙間の高さを設定 */
+}
+
+.attendance__button-break {
+    margin-top: 10px;
+    /* 上部の隙間の高さを設定 */
+}
+
+
+.attendance__button-submit {
+    padding: 5px;
+    width: 48%;
+    height: 100px;
+    border: none;
+    border-radius: 3px;
+    background: white;
+    color: black;
+    cursor: pointer;
+}
+
+.attendance__button-submit+.attendance__button-submit {
+    margin-left: 4%;
+    /* ボタン間の隙間を設定 */
+}
+
+
+.attendance__content {
+    margin: 0 auto;
+    padding: 5%;
+    max-width: 1230px;
+    background-color: #eeecec;
+    padding-bottom: 120px;
+}
+
+.attendance-table {
+    margin: 30px auto;
+    width: 70%;
+    text-align: center;
+}
+
+.attendance-table__inner {
+    width: 100%;
+}
+
+.attendance-table__row {
+    border-bottom: 1px solid #ddd;
+}
+
+.attendance-table__header {
+    padding: 12px;
+    width: 20%;
+    font-weight: bold;
+}
+
+.attendance-table__item {
+    padding: 12px;
+    width: 20%;
+}
+
+.main {
+    background-color: #eeecec;
+}
+
+/* 勤務開始ボタンのスタイル */
+.attendance__button-start[disabled] {
+    opacity: 0.5;
+    /* 半透明にする */
+    cursor: not-allowed;
+    /* クリック無効にする */
+}
+
+/* 勤務終了ボタンのスタイル */
+.attendance__button-end[disabled] {
+    opacity: 0.5;
+    /* 半透明にする */
+    cursor: not-allowed;
+    /* クリック無効にする */
+}
+
+/* 休憩開始ボタンのスタイル */
+.attendance__button-break[disabled] {
+    opacity: 0.5;
+    /* 半透明にする */
+    cursor: not-allowed;
+    /* クリック無効にする */
+}
+
+/* 休憩終了ボタンのスタイル */
+.attendance__button-end[disabled] {
+    opacity: 0.5;
+    /* 半透明にする */
+    cursor: not-allowed;
+    /* クリック無効にする */
+}
