@@ -220,6 +220,4 @@ class AttendanceController extends Controller
         $attendance->save();
         // ...
     }
-
-
 }
