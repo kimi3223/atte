@@ -34,6 +34,12 @@ class AttendanceController extends Controller
             ->whereDate('start_time', $selectedDate)
             ->first();
 
+         // 勤務開始している場合はホームにリダイレクトする
+        $attendanceStarted = Attendance::where('user_id', $user->id)
+            ->whereDate('start_time', $selectedDate)
+            ->whereNotNull('end_time')
+            ->exists();
+
         return view('attendance.index', [
             'user' => $user,
             'attendanceData' => $attendanceData,
@@ -41,6 +47,7 @@ class AttendanceController extends Controller
             'totalWorkTime' => $totalWorkTime,
             'attendances' => $attendances,
             'selectedDate' => $selectedDate,
+            'attendanceStarted' => $attendanceStarted,
         ])->with('success', '勤務を開始しました。');
     }
 
@@ -112,7 +119,7 @@ class AttendanceController extends Controller
             ->first();
 
         if ($existingAttendance) {
-            return redirect()->route('attendance.index')->with('error', '今日は既に勤務を開始しています。');
+            return redirect()->back()->with('success' , '勤務を開始しました。');
         }
 
         // 勤務開始時間を現在の時刻で設定
@@ -126,17 +133,19 @@ class AttendanceController extends Controller
             'start_time' => $startTime,
         ]);
 
+         // 勤務開始している場合はホームにリダイレクトする
+        $attendanceStarted = Attendance::where('user_id', $user->id)
+            ->whereDate('start_time', $selectedDate)
+            ->whereNotNull('end_time')
+            ->exists();
 
-        return view('attendance.index', [
-            'user' => $user,
-            'attendanceData' => $attendanceData,
-            'totalBreakTime' =>$totalBreakTime,
-            'totalWorkTime' => $totalWorkTime,
-            'attendances' => $attendances,
-            'selectedDate' => $selectedDate,
-            'attendanceStarted' => $attendanceStarted,
-        ])->with('success', '勤務を開始しました。');
+        if ($attendanceStarted) {
+            return redirect()->back()->with( 'success' , '勤務を開始しました。' );
+        }
+        return redirect()->back()->with('success', '勤務を開始しました。');
+
     }
+
 
     public function endWork(Request $request)
     {
@@ -183,6 +192,9 @@ class AttendanceController extends Controller
             $attendance->work_time = $work_time;
 
             $attendance->save();
+
+            $workStarted = true;
+            $workEnded = false;
 
             return redirect()->back()->with('success', '勤務を終了しました。');
     }

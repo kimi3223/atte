@@ -27,17 +27,28 @@ class BreakTimeController extends Controller
             $break->user_id = $user->id;
             $break->date = now()->toDateString(); // 今日の日付を取得
             $break->start_time = now(); // Carbonクラスを使用
-            $break->save();
 
-            $break_time = 0; // 初期値は 0
-            session(['break_time' => $break_time]);
+            if (!$lastBreak) {
+                // 直前の休憩が存在しない場合は新しい休憩を開始
+                $break->save();
 
-            return redirect()->back()->with('success', '休憩開始しました');
+                $break_time = 0; // 初期値は 0
+                session(['break_time' => $break_time]);
+                // 休憩が開始された場合のフラグを設定
+                $breakStarted = true;
+            } else {
+                // 直前の休憩が終了している場合は新しい休憩を開始
+                $break->save();
+
+                // ここで何か追加の処理が必要な場合は追加してください
+
+                // 休憩が開始された場合のフラグを設定
+                $breakStarted = true;
+
+                return redirect()->back()->with('success', '休憩開始しました');
+            }
         }
-        // 休憩が終了していない場合はエラーメッセージを表示
-        return redirect()->back()->with('error', '前回の休憩が終了していません。');
-        }
-
+    }
     public function endBreak(Request $request)
         {
             $userId = auth()->user()->id;
@@ -49,27 +60,34 @@ class BreakTimeController extends Controller
 
             if ($lastBreak && is_null($lastBreak->end_time)) {
                 // 休憩がまだ終了していない場合、終了処理を行う
-            $lastBreak->end_time = now();
-            $lastBreak->save();
+                $lastBreak->end_time = now();
+                $lastBreak->save();
 
+                // 休憩終了が成功した場合に、休憩開始ボタンを活性化するJavaScriptを実行
+                echo "<script>enableBreakStartButton();</script>";
 
-            // 休憩時間の計算
-            $today = now()->toDateString();
+                // 休憩が終了した場合のフラグを設定
+                $breakEnded = true;
+                // 休憩時間の計算
+                $today = now()->toDateString();
 
-            $user = auth()->user();
-            $attendance = Attendance::where('user_id', $userId)
-                ->whereDate('start_time', $today)
-                ->first();
+                $user = auth()->user();
+                $attendance = Attendance::where('user_id', $userId)
+                    ->whereDate('start_time', $today)
+                    ->first();
+
+                } else {
+                    // 前回の休憩が終了している場合はエラーメッセージを表示
+                    return redirect()->back()->with('error', '前回の休憩が終了していません。');
+                }
 
             if (!$attendance) {
                 return redirect()->back()->with('success', '休憩を終了しました。');
-            }
+                }
 
             if ($attendance->end_time) {
                 return redirect()->back()->with('error', '既に勤務を終了しています。');
             }
-
-
             // 休憩時間の計算
             $breaks = BreakTime::where('user_id', $user->id)
                 ->whereDate('date', $today)
@@ -87,7 +105,7 @@ class BreakTimeController extends Controller
             session(['break_time' => $break_time]); // 更新後の値をセッションに保存
 
             return redirect()->back()->with('success', '休憩を終了しました。');
-            }
+
             // 前回の休憩が終了している場合はエラーメッセージを表示
             return redirect()->back()->with('error', '前回の休憩が終了していません。');
         }
