@@ -30,22 +30,20 @@ class AuthController extends Controller
         // 勤務開始ボタンの状態
         $workStarted = !$existingAttendance;
 
+        $breakStarted = false;
+        $breakEnded = false;
+
         if ($workStarted) {
             $workEnded = $existingAttendance && $existingAttendance->end_time; // 1日に一度しか押せないようにする
 
             if ($workEnded) {
-                $workEnded = true; // すでに勤務終了している場合
+                $workEnded = false; // すでに勤務終了している場合
             } else {
-                $workEnded = false; // 勤務終了していない場合
+                $workEnded = true; // 勤務終了していない場合
             }
         } else {
             $workEnded = false; // 勤務が開始されていない場合は常に非活性
         }
-
-        // 休憩ボタンの活性化条件（例：勤務開始されていれば休憩開始ボタンを活性化）
-        $breakStarted = $workStarted && !$workEnded;
-        // 勤務が開始されていて、終了しておらず、休憩が既に始まっている場合に活性化
-        $breakEnded = $breakStarted && $workStarted;
 
         return view('index', [
             'welcomeMessage' => $welcomeMessage,
@@ -53,7 +51,7 @@ class AuthController extends Controller
             'selectedDate' => $today,
             'workStarted' => $workStarted,
             'workEnded' => $workEnded,
-            'breakStarted' => $breakEnded,
+            'breakStarted' => $breakStarted,
             'breakEnded' => $breakEnded,
         ]);
     }

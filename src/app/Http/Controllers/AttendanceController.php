@@ -13,7 +13,6 @@ class AttendanceController extends Controller
 {
     public function index($date = null)
     {
-        // コントローラー内でフラグを設定
         $totalBreakTime = 0; // 変数を定義
         $totalWorkTime = 0; // totalWorkTime も追加
         $selectedDate = $date ? Carbon::parse($date) : now();
@@ -34,11 +33,10 @@ class AttendanceController extends Controller
             ->whereDate('start_time', $selectedDate)
             ->first();
 
-         // 勤務開始している場合はホームにリダイレクトする
-        $attendanceStarted = Attendance::where('user_id', $user->id)
-            ->whereDate('start_time', $selectedDate)
-            ->whereNotNull('end_time')
-            ->exists();
+        $workStarted = true;
+        $worEnded = false;
+        $breakStarted = false;
+        $breakEnded = false;
 
         return view('attendance.index', [
             'user' => $user,
@@ -47,19 +45,19 @@ class AttendanceController extends Controller
             'totalWorkTime' => $totalWorkTime,
             'attendances' => $attendances,
             'selectedDate' => $selectedDate,
-            'attendanceStarted' => $attendanceStarted,
-        ])->with('success', '勤務を開始しました。');
+        ]);
     }
 
     public function startWork(Request $request)
     {
+        \Log::info('ログメッセージ');
+
         if(!Auth::check()) {
             return redirect()->route('login')->with('error', 'ログインしてください');
             }
 
             // ログインユーザーのIDを取得
         $userId = auth()->user()->id;
-        $attendanceStarted = true;
             // ユーザーデータを取得
         $user = Auth::user();
 
@@ -83,7 +81,7 @@ class AttendanceController extends Controller
                 ->first();
 
         if ($existingAttendance) {
-                return redirect()->back()->with('error', '今日は既に勤務を開始しています。');
+                return redirect()->back()->with('error', '今日はすでに勤務を開始しています。');
             }
 
             // 勤務開始時間を現在の時刻で設定
@@ -118,32 +116,24 @@ class AttendanceController extends Controller
             ->whereDate('start_time', $currentDate)
             ->first();
 
-        if ($existingAttendance) {
-            return redirect()->back()->with('success' , '勤務を開始しました。');
-        }
-
         // 勤務開始時間を現在の時刻で設定
         \Log::info("Start Work method called");
 
         $startTime = now();
 
-        // データベースに登録
-        Attendance::create([
-            'user_id' => $userId,
-            'start_time' => $startTime,
-        ]);
-
-         // 勤務開始している場合はホームにリダイレクトする
-        $attendanceStarted = Attendance::where('user_id', $user->id)
+        $selectedDate = now();
+        $attendance = Attendance::where('user_id', $user->id)
             ->whereDate('start_time', $selectedDate)
-            ->whereNotNull('end_time')
-            ->exists();
+            ->first();
 
-        if ($attendanceStarted) {
-            return redirect()->back()->with( 'success' , '勤務を開始しました。' );
+        if ( $attendance && !is_null($attendance->start_time) && is_null($attendance->end_time)){
+            $workStarted = false;
+            $workEnded = true;
+            $breakStarted = true;
+            $breakEnded = false;
         }
-        return redirect()->back()->with('success', '勤務を開始しました。');
 
+        return redirect()->back()->with('success', '勤務を開始しました。');
     }
 
 
@@ -153,6 +143,7 @@ class AttendanceController extends Controller
             $user = Auth::user();
             $today = now();
             $break_time = 0;
+
             $attendance = Attendance::where('user_id', $user->id)
                 ->whereDate('start_time', $today)
                 ->first();
@@ -193,8 +184,22 @@ class AttendanceController extends Controller
 
             $attendance->save();
 
-            $workStarted = true;
-            $workEnded = false;
+            // 勤務開始ボタンの状態
+                $workStarted = false;
+                $workEnded = false;
+                $breakStarted = false;
+                $breakEnded = false;
+
+            if ($attendance && !is_null($attendance->start_time) && !is_null($attendance->end_time)){
+                $workStarted = false;
+                $workEnded = true;
+            }
+            return view('index', [
+                        'workStarted' => $workStarted,
+                        'workEnded' => $workEnded,
+                        'breakStarted' => $breakStarted,
+                        'breakEnded' => $breakEnded,
+                    ])->with('success', '勤務を終了しました。お疲れ様でした。');
 
             return redirect()->back()->with('success', '勤務を終了しました。');
     }

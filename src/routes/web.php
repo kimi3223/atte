@@ -34,3 +34,5 @@ Route::get('/break/start', [BreakTimeController::class, 'startBreak']);
 Route::post('/break/start', [BreakTimeController::class, 'startBreak'])->name('break.start');
 Route::get('/break/end', [BreakTimeController::class, 'endBreak']);
 Route::post('/break/end', [BreakTimeController::class, 'endBreak'])->name('break.end');
+Route::post('/break/start', [BreakTimeController::class, 'startBreak']);
+
