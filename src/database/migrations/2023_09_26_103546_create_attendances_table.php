@@ -19,11 +19,8 @@ class CreateAttendancesTable extends Migration
             $table->dateTime('start_time')->default(now());;
             $table->dateTime('end_time')->nullable();
             $table->integer('break_time')->default(0);
-            $table->dateTime('break_start_time')->nullable();
-            $table->dateTime('break_end_time')->nullable();
             $table->timestamps();
 
-            $table->dateTime('start_time')->default(now())->nullable();
         });
     }
 
