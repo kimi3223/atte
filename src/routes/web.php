@@ -30,9 +30,6 @@ Route::post('/start-work', [AttendanceController::class, 'startWork'])->name('st
 Route::get('/end-work/{id}', [AttendanceController::class, 'endWork'])->name('end.work');
 Route::post('/end-work', [AttendanceController::class, 'endWork'])->name('end.work');
 Route::get('/attendance/{date?}', [AttendanceController::class, 'index'])->name('attendance.index');
-Route::get('/break/start', [BreakTimeController::class, 'startBreak']);
 Route::post('/break/start', [BreakTimeController::class, 'startBreak'])->name('break.start');
-Route::get('/break/end', [BreakTimeController::class, 'endBreak']);
 Route::post('/break/end', [BreakTimeController::class, 'endBreak'])->name('break.end');
 Route::post('/break/start', [BreakTimeController::class, 'startBreak']);
-

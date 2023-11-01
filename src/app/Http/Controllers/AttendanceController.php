@@ -117,21 +117,21 @@ class AttendanceController extends Controller
             ->first();
 
         // 勤務開始時間を現在の時刻で設定
-        \Log::info("Start Work method called");
+        //\Log::info("Start Work method called");
 
-        $startTime = now();
+        //$startTime = now();
 
-        $selectedDate = now();
-        $attendance = Attendance::where('user_id', $user->id)
-            ->whereDate('start_time', $selectedDate)
-            ->first();
+        //$selectedDate = now();
+        //$attendance = Attendance::where('user_id', $user->id)
+        //    ->whereDate('start_time', $selectedDate)
+        //    ->first();
 
-        if ( $attendance && !is_null($attendance->start_time) && is_null($attendance->end_time)){
-            $workStarted = false;
-            $workEnded = true;
-            $breakStarted = true;
-            $breakEnded = false;
-        }
+        //if ( $attendance && !is_null($attendance->start_time) && is_null($attendance->end_time)){
+        //    $workStarted = false;
+        //    $workEnded = true;
+        //    $breakStarted = true;
+        //    $breakEnded = false;
+        //}
 
         return redirect()->back()->with('success', '勤務を開始しました。');
     }
@@ -153,6 +153,10 @@ class AttendanceController extends Controller
             }
 
             if ($attendance->end_time) {
+                $workStarted = false;
+                $workEnded = false;
+                $breakStarted = false;
+                $breakEnded = false;
                 return redirect()->back()->with('error', '既に勤務を終了しています。');
             }
             // 勤務終了時間を現在の時刻で設定
