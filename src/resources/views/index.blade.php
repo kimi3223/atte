@@ -44,7 +44,6 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-
     var startBreakButton = document.getElementById('startBreakButton');
     var endBreakButton = document.getElementById('endBreakButton');
     var workStarted = false;
@@ -70,9 +69,6 @@
 
     // 勤務開始がされた場合、休憩開始ボタンを活性化
     document.querySelector('.attendance__button').addEventListener('submit', function() {
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/break/start', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
         xhr.onload = function () {
@@ -93,7 +89,6 @@
         xhr.send();
         return false;
         });
-
     // 終了ボタンを押した場合の処理
     endBreakButton.addEventListener('click', function() {
         var xhr = new XMLHttpRequest();

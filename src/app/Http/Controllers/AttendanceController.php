@@ -22,9 +22,13 @@ class AttendanceController extends Controller
         $day = date('d');
         $user = Auth::user();
         $attendance_id = 20231011;
-        $attendances = Attendance::where('user_id', $user->id)->simplePaginate(5);
 
-        $user = Auth::user();
+        // 全てのユーザーの勤怠データを取得
+        $attendanceData = Attendance::whereDate('start_time', $selectedDate)->get();
+
+        // ページネーションを使って出席者データを取得
+        $attendances = Attendance::whereDate('start_time', $selectedDate)->paginate(5);
+
         $attendanceData = Attendance::where('user_id', $user->id)
             ->whereDate('start_time', $selectedDate)
             ->get();
@@ -37,6 +41,9 @@ class AttendanceController extends Controller
         $worEnded = false;
         $breakStarted = false;
         $breakEnded = false;
+
+        // 全てのユーザーの勤怠データを取得
+        $attendanceData = Attendance::whereDate('start_time', $selectedDate)->get();
 
         return view('attendance.index', [
             'user' => $user,
@@ -110,29 +117,6 @@ class AttendanceController extends Controller
         if ($lastAttendance && !$lastAttendance->end_time) {
             $lastAttendance->update(['end_time' => now()]);
         }
-
-        // 既に勤務開始済みかどうかを確認
-        $existingAttendance = Attendance::where('user_id', $userId)
-            ->whereDate('start_time', $currentDate)
-            ->first();
-
-        // 勤務開始時間を現在の時刻で設定
-        //\Log::info("Start Work method called");
-
-        //$startTime = now();
-
-        //$selectedDate = now();
-        //$attendance = Attendance::where('user_id', $user->id)
-        //    ->whereDate('start_time', $selectedDate)
-        //    ->first();
-
-        //if ( $attendance && !is_null($attendance->start_time) && is_null($attendance->end_time)){
-        //    $workStarted = false;
-        //    $workEnded = true;
-        //    $breakStarted = true;
-        //    $breakEnded = false;
-        //}
-
         return redirect()->back()->with('success', '勤務を開始しました。');
     }
 
@@ -241,4 +225,18 @@ class AttendanceController extends Controller
         $attendance->save();
         // ...
     }
+
+    public function allAttendance($date = null)
+{
+    $selectedDate = $date ? Carbon::parse($date) : now();
+
+    $attendanceData = Attendance::whereDate('start_time', $selectedDate)
+        ->paginate(5);
+
+    return view('attendance.all', [
+        'attendanceData' => $attendanceData,
+        'selectedDate' => $selectedDate,
+    ]);
+}
+
 }

@@ -24,14 +24,15 @@
     <tbody class="Table-Body">
         @foreach($attendanceData as $attendance)
         <tr class="Table-Head-Row">
-            <td class="Table-Body-Row-Cell">{{ $user->name }}</td>
+            <td class="Table-Body-Row-Cell">{{ $attendance->user->name }}</td>
             <td class="Table-Body-Row-Cell">{{ $attendance->start_time->format('H:i:s') }}</td>
             <td class="Table-Body-Row-Cell">
                 @if($attendance->end_time)
-                {{ $attendance->end_time->format('H:i:s') }}</td>
+                {{ $attendance->end_time->format('H:i:s') }}
                 @else
                 勤務終了していません
                 @endif
+            </td>
             <td class="Table-Body-Row-Cell">{{ \Carbon\CarbonInterval::minutes($attendance->break_time)->cascade()->format('%H:%I:%S') }}</td>
             <td class="Table-Body-Row-Cell">{{ \Carbon\CarbonInterval::minutes($attendance->work_time)->cascade()->format('%H:%I:%S') }}</td>
         </tr>
@@ -39,6 +40,7 @@
         </tbody>
         <tfoot>
             <tr>
+                <td colspan="5">{{ $attendances->links() }}</td>
             </tr>
         </tfoot>
     </table>

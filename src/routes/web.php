@@ -33,3 +33,5 @@ Route::get('/attendance/{date?}', [AttendanceController::class, 'index'])->name(
 Route::post('/break/start', [BreakTimeController::class, 'startBreak'])->name('break.start');
 Route::post('/break/end', [BreakTimeController::class, 'endBreak'])->name('break.end');
 Route::post('/break/start', [BreakTimeController::class, 'startBreak']);
+Route::get('/all-attendance/{date?}', [AttendanceController::class, 'allAttendance'])->name('all-attendance');
+

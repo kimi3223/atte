@@ -23,9 +23,7 @@ class BreakTimeController extends Controller
                 ->first();
 
             if (!$lastBreak) {
-                // 休憩が終了していない場合はエラーメッセージを返す
-                return response()->json(['error' => '前回の休憩が終了していません。']);
-            }
+                // 休憩が終了していない場合はエラーメッセージを返す            }
 
                 $break = new \App\Models\BreakTime(); // 名前空間を指定
                 $break->user_id = $user->id;
@@ -51,7 +49,7 @@ class BreakTimeController extends Controller
                         'breakStarted' => $breakStarted,
                         'breakEnded' => $breakEnded,
                     ])->with('success', '休憩を開始しました。');
-
+            }
                 return response()->json(['message' => '休憩を開始しました']);
             }
 
