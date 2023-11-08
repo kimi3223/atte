@@ -1,26 +1,32 @@
 .Table {
     width: 100%;
+    margin: 0 auto;
     border-top: solid 1px #adabab;
     border-bottom: solid 1px #adabab;
     border-collapse: collapse;
     background-color: #eeecec;
     font-size: 16px;
     text-align: center;
+}
+.Table thead {
+    width: 90%;
+    /* 記述部分の幅を90%に指定 */
     margin: 0 auto;
+    /* 中央配置 */
 }
 
 .Table-Head-data {
     text-align: center;
     background-color: #eeecec;
-    padding: 30px;
+    padding: 40px;
 }
 
 .Table-Head-data a {
     display: inline-block;
     margin: 0 5px;
-    padding: 5px 10px;
-    border: 1px solid #000;
-    background-color: #fff;
+    padding: 1px 10px;
+    border: 1px solid blue;
+    background-color: white;
     color: #00f;
     text-decoration: none;
     font-weight: bold;

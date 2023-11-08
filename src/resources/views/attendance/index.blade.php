@@ -39,9 +39,9 @@
         @endforeach
     </tbody>
 </table>
-<div class="pagination">
+<div class="pagination" style="text-align: center;">
     @if ($attendanceData->onFirstPage())
-        <span class="pagination-item pagination-disabled">&lt;</span>
+        <span class="pagination-box pagination-disabled">&lt;</span>
     @else
         <a href="{{ $attendanceData->previousPageUrl() }}" class="pagination-item">&lt;</a>
     @endif
@@ -57,9 +57,9 @@
     @endfor
 
     @if ($attendanceData->hasMorePages())
-        <a href="{{ $attendanceData->nextPageUrl() }}" class="pagination-item">&gt;</a>
+        <a href="{{ $attendanceData->nextPageUrl() }}" class="pagination-box">&gt;</a>
     @else
-        <span class="pagination-item pagination-disabled">&gt;</span>
+        <span class="pagination-box pagination-disabled">&gt;</span>
     @endif
 </div>
 @endsection

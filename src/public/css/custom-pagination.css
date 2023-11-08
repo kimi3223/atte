@@ -1,9 +1,23 @@
+div.pagination {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    background-color: #eeecec;
+    padding: 5% 0;
+}
+
 .pagination-box {
     display: inline-block;
     padding: 5px 10px;
-    border: 1px solid #000;
+    border: 1px solid white;
     /* 枠線を追加 */
     margin: 0 2px;
     text-decoration: none;
-    color: #000;
+    background-color: white;
+    color: blue;
+}
+.pagination-current {
+    background-color: blue;
+    color: white;
+    /* テキストを白色に */
 }
