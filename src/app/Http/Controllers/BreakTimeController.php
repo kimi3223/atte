@@ -22,9 +22,10 @@ class BreakTimeController extends Controller
                 ->latest()
                 ->first();
 
-            if (!$lastBreak) {
+            if (!$lastBreak && $lastBreak !== null) {
                 // 休憩が終了していない場合はエラーメッセージを返す            }
-
+            return response()->json(['error' => '前回の休憩が終了していません。']);
+            }
                 $break = new \App\Models\BreakTime(); // 名前空間を指定
                 $break->user_id = $user->id;
                 $break->date = now()->toDateString(); // 今日の日付を取得
@@ -42,14 +43,13 @@ class BreakTimeController extends Controller
                 $workEnded = false;
                 $breakStarted = true;
                 $breakEnded = $breakStarted ? true : false;
-
                 return view('index', [
                         'workStarted' => $workStarted,
                         'workEnded' => $workEnded,
                         'breakStarted' => $breakStarted,
                         'breakEnded' => $breakEnded,
                     ])->with('success', '休憩を開始しました。');
-            }
+
                 return response()->json(['message' => '休憩を開始しました']);
             }
 

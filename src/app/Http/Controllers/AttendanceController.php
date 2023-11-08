@@ -24,14 +24,13 @@ class AttendanceController extends Controller
         $attendance_id = 20231011;
 
         // 全てのユーザーの勤怠データを取得
-        $attendanceData = Attendance::whereDate('start_time', $selectedDate)->get();
+        //$attendanceData = Attendance::whereDate('start_time', $selectedDate)->get();
 
         // ページネーションを使って出席者データを取得
         $attendances = Attendance::whereDate('start_time', $selectedDate)->paginate(5);
 
-        $attendanceData = Attendance::where('user_id', $user->id)
-            ->whereDate('start_time', $selectedDate)
-            ->get();
+        $attendanceData = Attendance::whereDate('start_time', $selectedDate)
+            ->paginate(5);
 
         $attendance = Attendance::where('user_id', $user->id)
             ->whereDate('start_time', $selectedDate)
@@ -43,7 +42,7 @@ class AttendanceController extends Controller
         $breakEnded = false;
 
         // 全てのユーザーの勤怠データを取得
-        $attendanceData = Attendance::whereDate('start_time', $selectedDate)->get();
+        //$attendanceData = Attendance::whereDate('start_time', $selectedDate)->paginate(5);
 
         return view('attendance.index', [
             'user' => $user,
@@ -230,13 +229,11 @@ class AttendanceController extends Controller
 {
     $selectedDate = $date ? Carbon::parse($date) : now();
 
-    $attendanceData = Attendance::whereDate('start_time', $selectedDate)
-        ->paginate(5);
+    //$attendanceData = Attendance::whereDate('start_time', $selectedDate)->paginate(5);
 
     return view('attendance.all', [
         'attendanceData' => $attendanceData,
         'selectedDate' => $selectedDate,
     ]);
 }
-
 }

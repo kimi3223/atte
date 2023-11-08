@@ -2,6 +2,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/data.css') }}">
+<link rel="stylesheet" href="{{ asset('css/custom-pagination.css') }}">
 @endsection
 
 @section('content')
@@ -12,7 +13,6 @@
             <span>{{ $selectedDate->format('Y-m-d') }}</span>
             <a href="{{ route('attendance.index', $selectedDate->copy()->addDay()->format('Y-m-d')) }}">></a>
         </div>
-        <!-- ページネーションリンクを表示 -->
         <tr class="Table-Head-Row">
             <th class="Table-Head-Row-Cell">名前</th>
             <th class="Table-Head-Row-Cell">勤務開始</th>
@@ -37,11 +37,29 @@
             <td class="Table-Body-Row-Cell">{{ \Carbon\CarbonInterval::minutes($attendance->work_time)->cascade()->format('%H:%I:%S') }}</td>
         </tr>
         @endforeach
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="5">{{ $attendances->links() }}</td>
-            </tr>
-        </tfoot>
-    </table>
+    </tbody>
+</table>
+<div class="pagination">
+    @if ($attendanceData->onFirstPage())
+        <span class="pagination-item pagination-disabled">&lt;</span>
+    @else
+        <a href="{{ $attendanceData->previousPageUrl() }}" class="pagination-item">&lt;</a>
+    @endif
+
+    @for ($i = 1; $i <= $attendanceData->lastPage(); $i++)
+        <span class="pagination-box">
+            @if ($i == $attendanceData->currentPage())
+                <span class="pagination-item pagination-current">{{ $i }}</span>
+            @else
+                <a href="{{ $attendanceData->url($i) }}" class="pagination-item">{{ $i }}</a>
+            @endif
+        </span>
+    @endfor
+
+    @if ($attendanceData->hasMorePages())
+        <a href="{{ $attendanceData->nextPageUrl() }}" class="pagination-item">&gt;</a>
+    @else
+        <span class="pagination-item pagination-disabled">&gt;</span>
+    @endif
+</div>
 @endsection
