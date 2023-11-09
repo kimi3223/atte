@@ -5,7 +5,14 @@ div.pagination {
     background-color: #eeecec;
     padding: 5% 0;
 }
-
+a.pagination-item.pagination-prev{
+    color: blue;
+    background-color: white;
+    border-radius: 10px 0 0 10px;
+    padding: 5px 10px;
+    margin: 0 2px;
+    text-decoration: none;
+}
 .pagination-box {
     display: inline-block;
     padding: 5px 10px;
@@ -16,8 +23,27 @@ div.pagination {
     background-color: white;
     color: blue;
 }
+span.pagination-box.pagination-disabled {
+    color: blue;
+    background-color: white;
+    border: 1px solid white;
+    border-radius: 10px 0 0 10px;
+    padding: 5px 10px;
+    margin: 0 2px;
+}
+a.pagination-box::before {
+    border-radius: 0 10px 10px 0;
+    color: blue;
+    /* 文字の色を指定 */
+    /* 他のスタイルが必要な場合はここに追加 */
+}
 .pagination-current {
     background-color: blue;
     color: white;
-    /* テキストを白色に */
+}
+
+.pagination-box .pagination-current {
+    background-color: blue;
+    color: white;
+    /* テキストの色も白にする場合 */
 }

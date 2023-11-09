@@ -41,9 +41,9 @@
 </table>
 <div class="pagination" style="text-align: center;">
     @if ($attendanceData->onFirstPage())
-        <span class="pagination-box pagination-disabled">&lt;</span>
+        <span class="pagination-box pagination-disabled">&lsaquo;</span>
     @else
-        <a href="{{ $attendanceData->previousPageUrl() }}" class="pagination-item">&lt;</a>
+        <a href="{{ $attendanceData->previousPageUrl() }}" class="pagination-item pagination-prev">&lsaquo;</a>
     @endif
 
     @for ($i = 1; $i <= $attendanceData->lastPage(); $i++)
@@ -57,9 +57,9 @@
     @endfor
 
     @if ($attendanceData->hasMorePages())
-        <a href="{{ $attendanceData->nextPageUrl() }}" class="pagination-box">&gt;</a>
+        <a href="{{ $attendanceData->nextPageUrl() }}" class="pagination-box" style="border-radius: 0 10px 10px 0;">&rsaquo;</a>
     @else
-        <span class="pagination-box pagination-disabled">&gt;</span>
+        <span class="pagination-box pagination-disabled" style="border-radius: 0 10px 10px 0;">&rsaquo;</span>
     @endif
 </div>
 @endsection
