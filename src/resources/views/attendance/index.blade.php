@@ -47,14 +47,17 @@
     @endif
 
     @for ($i = 1; $i <= $attendanceData->lastPage(); $i++)
-        <span class="pagination-box">
-            @if ($i == $attendanceData->currentPage())
+        @if ($i == $attendanceData->currentPage())
+            <span class="pagination-box pagination-current-box">
                 <span class="pagination-item pagination-current">{{ $i }}</span>
-            @else
+            </span>
+        @else
+            <span class="pagination-box">
                 <a href="{{ $attendanceData->url($i) }}" class="pagination-item">{{ $i }}</a>
-            @endif
-        </span>
+            </span>
+        @endif
     @endfor
+
 
     @if ($attendanceData->hasMorePages())
         <a href="{{ $attendanceData->nextPageUrl() }}" class="pagination-box" style="border-radius: 0 10px 10px 0;">&rsaquo;</a>

@@ -43,15 +43,16 @@
 .attendance__button-end,
 .attendance__button-break,
 .attendance__button-resume {
-    padding: 5px;
-    width: 200px;
-    height: 100px;
+    padding: 10px;
+    width: 260px;
+    height: 140px;
     /* ボタンの幅を調整 */
     border: none;
     border-radius: 3px;
     background: white;
     color: black;
     cursor: pointer;
+    font-size: 20px;
 }
 
 .attendance__button-start {
@@ -85,7 +86,6 @@
 .attendance__content {
     margin: 0 auto;
     padding: 5%;
-    max-width: 1230px;
     background-color: #eeecec;
     padding-bottom: 120px;
 }
@@ -150,3 +150,4 @@
     cursor: not-allowed;
     /* クリック無効にする */
 }
+

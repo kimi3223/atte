@@ -47,3 +47,7 @@ a.pagination-box::before {
     color: white;
     /* テキストの色も白にする場合 */
 }
+.pagination-current-box {
+    background-color: blue;
+    color: white;
+}
