@@ -33,8 +33,12 @@
                 勤務終了していません
                 @endif
             </td>
-            <td class="Table-Body-Row-Cell">{{ \Carbon\CarbonInterval::minutes($attendance->break_time)->cascade()->format('%H:%I:%S') }}</td>
-            <td class="Table-Body-Row-Cell">{{ \Carbon\CarbonInterval::minutes($attendance->work_time)->cascade()->format('%H:%I:%S') }}</td>
+            <td class="Table-Body-Row-Cell">
+                {{ \Carbon\CarbonInterval::minutes($attendance->break_time)->cascade()->format('%H:%I:%S') }}
+            </td>
+            <td class="Table-Body-Row-Cell">
+                {{ \Carbon\CarbonInterval::minutes($attendance->work_time)->cascade()->format('%H:%I:%S') }}
+            </td>
         </tr>
         @endforeach
     </tbody>
